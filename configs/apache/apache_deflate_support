@@ -1,0 +1,6 @@
+<IfModule mod_deflate.c>
+  AddOutputFilterByType DEFLATE text/css text/html text/javascript application/javascript application/x-javascript text/js text/plain text/xml
+  <IfModule mod_headers.c>
+    Header append Vary User-Agent
+  </IfModule>
+</IfModule>

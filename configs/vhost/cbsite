@@ -1,0 +1,28 @@
+# Don't cause the server to break if Passenger module not loaded
+<IfModule passenger_module>
+  <VirtualHost *:80>
+    
+    ServerName curtbeery.com
+    ServerAlias *.curtbeery.com
+
+    DocumentRoot "/var/www/apps/cbsite/current/public"
+    RailsEnv production
+    # RailsAllowModRewrite off
+    #
+    # Check for maintenance file and redirect all requests
+    RewriteEngine On
+    RewriteCond %{REQUEST_URI} !\.(css|jpg|png|gif)$
+    RewriteCond %{DOCUMENT_ROOT}/system/maintenance.html -f
+    RewriteCond %{SCRIPT_FILENAME} !maintenance.html
+    RewriteRule ^.*$ /system/maintenance.html [L]
+
+    RewriteCond %{HTTP_HOST} ^www.curtbeery.com$ [NC]
+    RewriteRule ^(.*)$ http://curtbeery.com$1 [R=301,L]
+    
+    <Directory "/var/www/apps/cbsite/current/public">
+      Order allow,deny
+      Allow from all
+    </Directory>
+
+  </VirtualHost>
+</IfModule>
