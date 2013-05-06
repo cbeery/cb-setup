@@ -30,4 +30,4 @@ pw = gets.chomp
 MYSQL_PW = pw.blank? ? 'austin2013' : pw
 
 # Git repo domains - for getting public keys
-GIT_REPO_DOMAINS = ['github.com', 'affygility.unfuddle.com']
+GIT_REPO_DOMAINS = ['github.com', 'cbeery.unfuddle.com']

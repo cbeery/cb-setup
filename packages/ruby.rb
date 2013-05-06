@@ -15,6 +15,6 @@ package :ruby_dependencies do
   description 'Ruby Virtual Machine Build Dependencies'
   # Changed name of readline package
   # apt %w( bison zlib1g-dev libssl-dev libreadline5-dev libncurses5-dev libyaml-0-2 file )
-  apt %w( bison zlib1g-dev libssl-dev libreadline-dev libncurses5-dev libyaml-0-2 libyaml-dev file )
+  apt %w( bison zlib1g-dev libssl-dev libreadline-dev libncurses5-dev libyaml-0-2 libyaml-dev file libxslt-dev libxml2-dev )
 
 end

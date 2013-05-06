@@ -14,7 +14,6 @@ policy :stack, :roles => :app do
   requires :scm # Git
   requires :capistrano_dirs
   requires :webserver # Apache
-  # requires :ssl # This site doesn't need SSL
   requires :appserver # Passenger
   requires :database # MySQL
   requires :imagemagick

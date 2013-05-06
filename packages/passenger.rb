@@ -20,7 +20,7 @@ end
 #
 package :passenger_configuration do
   description "Configure Passenger for Apache"
-  requires :passenger_load_file, :passenger_conf_file, :vhost_file
+  requires :passenger_load_file, :passenger_conf_file
 end
 
 package :passenger_load_file do
@@ -46,18 +46,3 @@ package :passenger_conf_file do
     file_contains configuration_file, 'PassengerRoot'
   end
 end
-
-package :vhost_file do
-  requires :common_vhost_config
-  virtual_host_file = "/etc/apache2/sites-available/#{APP_NAME}"
-
-  push_text File.read('configs/vhost/cbsite'), virtual_host_file do
-    post :install, "a2ensite #{APP_NAME}"
-    post :install, '/etc/init.d/apache2 restart'
-  end
-
-  verify do
-    has_file virtual_host_file
-  end
-end
-
