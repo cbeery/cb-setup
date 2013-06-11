@@ -11,8 +11,8 @@ APP_NAME = "cbsite"
 
 # SSH key files
 MY_PUBLIC_KEY = "/Users/curt/.ssh/id_rsa.pub"
-DEPLOY_PUBLIC_KEY = "/Users/curt/Dropbox/Affy/Affytrac/Deploy/id_rsa.pub"
-DEPLOY_PRIVATE_KEY = "/Users/curt/Dropbox/Affy/Affytrac/Deploy/id_rsa"
+DEPLOY_PUBLIC_KEY = "/Users/curt/.ssh/id_rsa_curt_github.pub"
+DEPLOY_PRIVATE_KEY = "/Users/curt/.ssh/id_rsa_curt_github"
 
 # Web app directory location
 APPS_DIRECTORY = "/var/www/apps"
