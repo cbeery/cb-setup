@@ -23,11 +23,11 @@ PASSENGER_VERSION = "3.0.19"
 # Additional apache config file - the conf.d directory is Included from the /etc/apache2/apache.conf
 MY_APACHE_CONFIG = "/etc/apache2/conf.d/additional_#{APP_NAME}_config"
 
-# MySQL database user
-MYSQL_USER = "cbsite"
-print "MySQL password for #{MYSQL_USER} (default: austin2013): "
-pw = gets.chomp
-MYSQL_PW = pw.blank? ? 'austin2013' : pw
+# MySQL database user and pw
+print "MySQL user name: "
+MYSQL_USER = gets.chomp
+print "MySQL password for #{MYSQL_USER}: "
+MYSQL_PW = gets.chomp
 
 # Git repo domains - for getting public keys
 GIT_REPO_DOMAINS = ['github.com', 'cbeery.unfuddle.com']
