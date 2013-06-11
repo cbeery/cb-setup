@@ -1,0 +1,7 @@
+# Hack for multiple sets up ssh keys for GitHub
+# We do this because on development machines, we have multiple ssh keys
+# Those multiple keys are managed with an ~/.ssh/config file, which we have to duplicate on the server
+Host github-curt
+  HostName github.com
+  User git
+  IdentityFile ~/.ssh/id_rsa

@@ -41,7 +41,7 @@ end
 
 package :deploy do
   # requires :deploy_user, :deploy_id_rsa, :deploy_id_rsa_pub, :deploy_sudoers
-  requires :deploy_user, :deploy_id_rsa, :deploy_id_rsa_pub, :deploy_sudoers, :curt_user, :curt_sudoers
+  requires :deploy_user, :deploy_id_rsa, :deploy_id_rsa_pub, :deploy_sudoers, :deploy_ssh_config, :curt_user, :curt_sudoers
 end
 
 # Add a deploy user and create everything they'll ever need
@@ -53,6 +53,7 @@ package :deploy_user do
     pre :install, 'touch /home/deploy/.ssh/id_rsa'
     pre :install, 'touch /home/deploy/.ssh/id_rsa.pub'
     pre :install, 'touch /home/deploy/.ssh/known_hosts'
+    pre :install, 'touch /home/deploy/.ssh/config'
     pre :install, 'cp /root/.ssh/authorized_keys /home/deploy/.ssh/authorized_keys'
     pre :install, 'cp /root/.ssh/known_hosts /home/deploy/.ssh/known_hosts'
     pre :install, 'chown -R deploy:deploy /home/deploy/.ssh/'
@@ -86,7 +87,7 @@ package :deploy_id_rsa_pub do
   push_text config_text, config_file
 
   verify do
-    file_contains config_file, "deploy_affy@affygility.com"
+    file_contains config_file, "git@curtbeery.com"
   end
 end
 
@@ -103,6 +104,17 @@ deploy ALL=NOPASSWD: ALL
     file_contains config_file, "deploy ALL=NOPASSWD: ALL"
   end
 end
+
+package :deploy_ssh_config do
+  config_file = '/home/deploy/.ssh/config.pub'
+  config_text = File.open('configs/logrotate','rb').read
+  push_text config_text, config_file
+
+  verify do
+    file_contains config_file, "github-curt"
+  end
+end
+
 
 # What the hell, add 'curt' user so I can ssh without the username
 package :curt do

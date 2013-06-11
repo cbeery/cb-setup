@@ -36,7 +36,7 @@ end
 
 # Depend on a specific version of sprinkle 
 begin
-  gem 'sprinkle', ">= 0.4.2" 
+  gem 'sprinkle', "0.4.2" 
 rescue Gem::LoadError
   puts "sprinkle 0.4.2 required.\n Run: `sudo gem install sprinkle`"
   exit
