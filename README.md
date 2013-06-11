@@ -15,4 +15,4 @@ To use run
 
 - **/packages** - Packages to install
 
-- **/configurations** - Various configuration texts to push out as part of some packages
+- **/configs** - Various configuration texts to push out as part of some packages
