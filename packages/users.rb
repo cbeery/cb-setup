@@ -106,8 +106,8 @@ deploy ALL=NOPASSWD: ALL
 end
 
 package :deploy_ssh_config do
-  config_file = '/home/deploy/.ssh/config.pub'
-  config_text = File.open('configs/logrotate','rb').read
+  config_file = '/home/deploy/.ssh/config'
+  config_text = File.open('configs/ssh_config','rb').read
   push_text config_text, config_file
 
   verify do
