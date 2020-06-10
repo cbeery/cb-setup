@@ -1,20 +1,14 @@
 package :ruby do
-  requires :ruby_dependencies
-  description 'Ruby Virtual Machine'
-  version '1.9.3'
-  patchlevel '286'
-
-  source "ftp://ftp.ruby-lang.org/pub/ruby/1.9/ruby-#{version}-p#{patchlevel}.tar.gz" do
-    pre :install, 'apt-get purge ruby ruby1.9 ruby1.9.1 rubygems1.8 rubygems1.9 rubygems1.9.1'
+	# https://www.brightbox.com/blog/2017/01/13/ruby-2-4-ubuntu-packages/
+  description 'Ruby 2.4'
+  apt 'ruby2.4 ruby2.4-dev' do
+    pre :install, 'sudo apt-add-repository ppa:brightbox/ruby-ng -y'
+    pre :install, 'sudo apt-get update'
   end
 
-  verify { has_executable_with_version "/usr/local/bin/ruby", version }
+  # verify { has_executable_with_version "/usr/local/bin/ruby", version }
+  # verify { has_executable_with_version "/usr/local/bin/ruby", '2.4.9' }
+  verify { has_executable_with_version "/usr/bin/ruby", '2.4.9' }
 end
 
-package :ruby_dependencies do
-  description 'Ruby Virtual Machine Build Dependencies'
-  # Changed name of readline package
-  # apt %w( bison zlib1g-dev libssl-dev libreadline5-dev libncurses5-dev libyaml-0-2 file )
-  apt %w( bison zlib1g-dev libssl-dev libreadline-dev libncurses5-dev libyaml-0-2 libyaml-dev file libxslt-dev libxml2-dev )
-
-end
+## NOT WORKING!!!

@@ -5,17 +5,22 @@ Dir.glob(File.join(File.dirname(__FILE__), 'packages/*.rb')).each { |f| require 
 policy :stack, :roles => :app do
   requires :build_essential
   requires :goodies
-  # requires :goodies_test
+  # # requires :goodies_test
   requires :timezone
   requires :root                    
   requires :deploy
   requires :ruby
+
   requires :bundler
   requires :scm # Git
   requires :capistrano_dirs
   requires :webserver # Apache
+  
   requires :appserver # Passenger
+  # requires :test_site
+  
   requires :database # MySQL
+  
   requires :imagemagick
   requires :logrotate
 end

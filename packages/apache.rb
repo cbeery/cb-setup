@@ -1,7 +1,9 @@
 package :apache, :provides => :webserver do
   description 'Apache2 web server.'
-  apt 'apache2 apache2.2-common apache2-mpm-prefork apache2-utils libexpat1 ssl-cert' do
-    post :install, 'a2enmod rewrite ssl'
+  # apt 'apache2 apache2.2-common apache2-mpm-prefork apache2-utils libexpat1 ssl-cert' do
+  #   post :install, 'a2enmod rewrite ssl'
+  apt 'apache2 apache2-utils libexpat1 ssl-cert' do
+    post :install, 'a2enmod rewrite ssl http2'
   end
 
   verify do
@@ -15,7 +17,11 @@ end
 package :apache_dependencies do
   description 'Apache 2 HTTP Server Build Dependencies'
   # apt %w( openssl libtool mawk zlib1g-dev libssl-dev libcurl4-openssl-dev libapr1-dev libaprutil1-dev libexpat1 ssl-cert )
-  apt %w( libcurl4-openssl-dev apache2-prefork-dev libapr1-dev libaprutil1-dev )
+  # apt %w( libcurl4-openssl-dev apache2-prefork-dev libapr1-dev libaprutil1-dev )
+  
+  # apt %w( libcurl4-openssl-dev libapr1-dev libaprutil1-dev )
+  
+  apt %w( zlib1g-dev libssl-dev apache2-dev libcurl4-openssl-dev libapr1-dev libaprutil1-dev )
 
   # TODO verify apache dependencies
 end
@@ -24,6 +30,7 @@ package :additional_apache_config_file do
   description 'Create file to include for additional Apache configuration'
   noop do
     pre :install, "touch #{MY_APACHE_CONFIG}"
+    post :install, "a2enconf #{MY_APACHE_CONFIG_FILENAME}"
   end
 
   verify do

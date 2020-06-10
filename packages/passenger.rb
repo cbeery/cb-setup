@@ -1,48 +1,39 @@
 package :passenger, :provides => :appserver do
-  requires :apache
-  description 'Passenger (mod_rails) for Apache'
-  version PASSENGER_VERSION
-  gem 'passenger', :version => version do
-    post :install, 'passenger-install-apache2-module --auto'
+  # https://www.phusionpassenger.com/library/install/apache/install/oss/bionic/
+  requires :apache, :passenger_dependencies
+  description 'Passenger for Apache'
+
+  apt 'libapache2-mod-passenger' do
+    post :install, 'sudo a2enmod passenger'
+    post :install, 'sudo apache2ctl restart'
+    post :install, 'sudo /usr/bin/passenger-config validate-install --auto --validate-apache2 > verify-passenger.txt'
   end
 
   verify do
-    has_gem  'passenger', version
-    has_file "/usr/local/lib/ruby/gems/1.9.1/gems/passenger-#{version}/ext/apache2/mod_passenger.so"
+    has_file "verify-passenger.txt"
+    file_contains "verify-passenger.txt", 'Everything looks good.'
   end
 
-  optional :passenger_configuration
 end
 
-# Run the application server with this command:
-#
-#   touch tmp/restart.txt
-#
-package :passenger_configuration do
-  description "Configure Passenger for Apache"
-  requires :passenger_load_file, :passenger_conf_file
+package :passenger_dependencies do
+  description "Pre-passenger installs"
+  requires :pgp_key, :https_support_for_apt, :add_apt_repo
 end
 
-package :passenger_load_file do
-  load_file = '/etc/apache2/mods-available/passenger.load'
-
-  push_text File.read('configs/passenger/passenger.load'), load_file 
-
-  verify do
-    has_file      load_file
-    file_contains load_file, 'LoadModule'
+package :pgp_key do
+  apt 'dirmngr gnupg' do
+    post :install, 'sudo apt-key adv --keyserver hkp://keyserver.ubuntu.com:80 --recv-keys 561F9B9CAC40B2F7'
   end
 end
 
-package :passenger_conf_file do
-  configuration_file = '/etc/apache2/mods-available/passenger.conf'
-  
-  push_text File.read('configs/passenger/passenger.conf'), configuration_file do
-    post :install, 'a2enmod passenger'
-  end
+package :https_support_for_apt do
+  apt 'apt-transport-https ca-certificates'
+end
 
-  verify do
-    has_file configuration_file
-    file_contains configuration_file, 'PassengerRoot'
+package :add_apt_repo do
+ noop do
+    post :install, "sudo sh -c 'echo deb https://oss-binaries.phusionpassenger.com/apt/passenger bionic main > /etc/apt/sources.list.d/passenger.list'"
+    post :install, "sudo apt-get update"
   end
 end

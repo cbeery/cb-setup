@@ -1,9 +1,13 @@
 # ip = ""
-ip = Capistrano::CLI.ui.ask "IP address: "
+
+# ip = Capistrano::CLI.ui.ask "IP address: "
+ip = '104.239.145.103'
 set :host_address, ip
 
-setup_user = Capistrano::CLI.ui.ask "User for setup/config on #{host_address}: "
-setup_user_pw = Capistrano::CLI.ui.ask "Password for #{setup_user} on #{host_address}: "
+# setup_user = Capistrano::CLI.ui.ask "User for setup/config on #{host_address}: "
+# setup_user_pw = Capistrano::CLI.ui.ask "Password for #{setup_user} on #{host_address}: "
+setup_user = 'root'
+setup_user_pw = 'TEHxH27GtdCiHYsBF7RceUPR'
 set :user, setup_user
 set :password, setup_user_pw
 
