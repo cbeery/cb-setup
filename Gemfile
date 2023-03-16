@@ -6,6 +6,6 @@ gem 'sprinkle', '0.4.2'
 
 gem 'capistrano', '2.5.21'
 gem 'net-ssh', '2.7.0'
-gem 'activesupport', '3.2.8'
+gem 'activesupport', '6.1.7.3'
 
 # We're just trying this in Jan 2019
